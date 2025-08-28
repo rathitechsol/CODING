@@ -1,0 +1,10 @@
+/* Additional light styling tweaks */
+.container { max-width: 1100px; }
+
+/* Buttons focus outline for accessibility */
+button:focus, input:focus, select:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.35);
+}
+
+

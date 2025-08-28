@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AnySave – Video downloader</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>AnySave</h1>
+      <p class="tag">Privacy-first downloader for public videos</p>
+    </header>
+
+    <main>
+      <section class="input">
+        <label for="url">Paste video URL</label>
+        <div class="row">
+          <input id="url" type="url" placeholder="https://www.instagram.com/reel/..." />
+          <button id="fetch">Get Info</button>
+        </div>
+        <small>Public posts only. Do not download content you don’t have rights to.</small>
+      </section>
+
+      <section id="preview" class="hidden">
+        <div class="card">
+          <img id="thumb" alt="thumbnail" />
+          <div class="meta">
+            <h2 id="title"></h2>
+            <p id="duration"></p>
+            <div class="row">
+              <label for="format">Format/Quality</label>
+              <select id="format"></select>
+              <label class="audio"><input type="checkbox" id="audioOnly" /> Audio MP3</label>
+              <button id="download">Download</button>
+            </div>
+          </div>
+        </div>
+        <div id="error" class="error hidden"></div>
+      </section>
+
+      <section class="legal">
+        <p>
+          Use AnySave responsibly. Only download videos you are legally allowed to save and that comply with the source platform’s terms. No login or tracking.
+        </p>
+      </section>
+    </main>
+
+    <script src="/script.js"></script>
+  </body>
+  </html>
+
+

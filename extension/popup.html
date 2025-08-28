@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elegant Dashboard Settings</title>
+    <link rel="stylesheet" href="popup.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="popup-container">
+        <header class="popup-header">
+            <div class="logo">
+                <i class="fas fa-tachometer-alt"></i>
+                <h1>Elegant Dashboard</h1>
+            </div>
+            <p class="version">v1.0.0</p>
+        </header>
+
+        <main class="popup-content">
+            <div class="quick-actions">
+                <button id="openNewTab" class="action-btn">
+                    <i class="fas fa-plus"></i>
+                    <span>Open New Tab</span>
+                </button>
+                <button id="openSettings" class="action-btn">
+                    <i class="fas fa-cog"></i>
+                    <span>Dashboard Settings</span>
+                </button>
+            </div>
+
+            <div class="stats-section">
+                <h3>Quick Stats</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="fas fa-tasks"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="todoCount">0</span>
+                            <span class="stat-label">Active Tasks</span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="currentTime">--:--</span>
+                            <span class="stat-label">Current Time</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="theme-section">
+                <h3>Quick Theme Toggle</h3>
+                <button id="themeToggle" class="theme-btn">
+                    <i class="fas fa-moon"></i>
+                    <span>Switch to Dark Mode</span>
+                </button>
+            </div>
+
+            <div class="links-section">
+                <h3>Quick Links</h3>
+                <div class="links-grid" id="popupQuickLinksGrid">
+                    <!-- Dynamic quick links will be rendered here -->
+                </div>
+            </div>
+        </main>
+
+        <footer class="popup-footer">
+            <p>Made with ❤️ for a better browsing experience</p>
+        </footer>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>
