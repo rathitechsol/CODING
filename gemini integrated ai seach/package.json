@@ -1,0 +1,31 @@
+{
+  "name": "gemini-insight-extension",
+  "version": "1.0.0",
+  "description": "AI-powered screen overlay extension using Gemini API to solve on-screen questions",
+  "main": "background.js",
+  "scripts": {
+    "build": "echo 'No build process needed for Chrome extension'",
+    "test": "echo 'No tests specified'",
+    "lint": "echo 'Linting not configured'"
+  },
+  "keywords": [
+    "chrome-extension",
+    "gemini",
+    "ai",
+    "screen-capture",
+    "overlay",
+    "google-ai"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/gemini-insight-extension.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/gemini-insight-extension/issues"
+  },
+  "homepage": "https://github.com/yourusername/gemini-insight-extension#readme",
+  "devDependencies": {},
+  "dependencies": {}
+}

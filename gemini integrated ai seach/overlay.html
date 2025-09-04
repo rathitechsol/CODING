@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini Overlay</title>
+    <link rel="stylesheet" href="overlay.css">
+</head>
+<body>
+    <div id="overlay-container">
+        <div class="overlay-backdrop"></div>
+        <div class="selection-tool">
+            <div class="crosshair"></div>
+            <div class="selection-box"></div>
+            <div class="action-panel">
+                <button class="solve-btn">Solve with Gemini</button>
+                <button class="cancel-btn">Cancel</button>
+            </div>
+        </div>
+        <div class="answer-panel" style="display: none;">
+            <div class="answer-header">
+                <h3>Gemini Answer</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="answer-content">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Analyzing your selection...</p>
+                </div>
+            </div>
+        </div>
+        <div class="instructions" style="display: none;">
+            <div class="instructions-content">
+                <h3>Select an area to analyze</h3>
+                <p>Click and drag to select the question or problem you want to solve</p>
+                <p><strong>Press ESC to cancel</strong></p>
+            </div>
+        </div>
+    </div>
+    <script src="overlay.js"></script>
+</body>
+</html>

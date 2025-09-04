@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini Insight</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Gemini Insight</h1>
+            <div class="status-indicator" id="statusIndicator">
+                <div class="status-dot"></div>
+                <span id="statusText">Checking connection...</span>
+            </div>
+        </div>
+        
+        <div class="auth-section" id="authSection">
+            <div class="auth-content">
+                <div class="icon">🔐</div>
+                <h2>Connect to Gemini</h2>
+                <p>Sign in to your Google account to access Gemini AI</p>
+                <button id="loginBtn" class="btn btn-primary">Sign In with Google</button>
+            </div>
+        </div>
+        
+        <div class="main-section" id="mainSection" style="display: none;">
+            <div class="quick-actions">
+                <h3>Quick Actions</h3>
+                <button id="activateOverlayBtn" class="btn btn-secondary">
+                    <span class="icon">🎯</span>
+                    Activate Overlay (Alt+Q)
+                </button>
+                <button id="settingsBtn" class="btn btn-outline">
+                    <span class="icon">⚙️</span>
+                    Settings
+                </button>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-number" id="queriesCount">0</span>
+                    <span class="stat-label">Queries Today</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number" id="lastUsed">--</span>
+                    <span class="stat-label">Last Used</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="settings-section" id="settingsSection" style="display: none;">
+            <h3>Settings</h3>
+            <div class="setting-item">
+                <label for="hotkeyInput">Hotkey:</label>
+                <div class="hotkey-input-group">
+                    <input type="text" id="hotkeyInput" value="Alt+Q" readonly placeholder="e.g., Alt+Q">
+                    <button id="changeHotkeyBtn" class="btn btn-small">Change</button>
+                </div>
+                <div class="hotkey-help">
+                    <small>Examples: Ctrl+Shift+G, Alt+Q, F1, Ctrl+Alt+Space</small>
+                </div>
+            </div>
+            <div class="setting-item">
+                <label for="apiKeyInput">API Key:</label>
+                <input type="password" id="apiKeyInput" placeholder="Enter your Gemini API key">
+                <button id="saveApiKeyBtn" class="btn btn-small">Save</button>
+            </div>
+            <button id="backToMainBtn" class="btn btn-outline">Back to Main</button>
+        </div>
+        
+        <div class="footer">
+            <button id="logoutBtn" class="btn btn-text">Sign Out</button>
+        </div>
+    </div>
+    
+    <script src="popup.js"></script>
+</body>
+</html>

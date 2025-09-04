@@ -1,0 +1,345 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e3e6e6;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header styling (Top bar) */
+.header-top {
+    background-color: #131921;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    justify-content: space-between;
+    min-height: 60px; /* Ensure a minimum height for the top bar */
+}
+
+.header-left {
+    display: flex;
+    align-items: flex-end; /* Align to the bottom of the items */
+    gap: 15px;
+}
+
+.logo-link {
+    display: flex; /* Make the link a flex container */
+    align-items: center;
+    height: 100%; /* Ensure it takes full height of its parent */
+    padding: 0 10px; /* Add some padding around the logo */
+}
+
+.amazon-logo {
+    height: 30px; /* Adjusted for better visual alignment */
+    padding-top: 5px; /* Adjust if needed for vertical alignment */
+}
+
+.location-container {
+    font-size: 0.8rem;
+    line-height: 1.2;
+    padding: 0 10px; /* Padding for click area */
+    cursor: pointer;
+}
+
+.update-location {
+    font-weight: bold;
+    display: block; /* Make it block to ensure it's on a new line */
+}
+
+.search-bar-container {
+    display: flex;
+    flex-grow: 1;
+    max-width: 800px;
+    margin: 0 15px;
+    border-radius: 4px; /* Rounded corners for the whole search bar */
+    overflow: hidden; /* Ensures child elements respect border-radius */
+}
+
+.search-bar-container:focus-within { /* Highlight when search bar is focused */
+    outline: 3px solid #f3a847;
+}
+
+
+.all-dropdown {
+    background-color: #e6e6e6;
+    color: #555;
+    padding: 10px;
+    border: none; /* Remove default border */
+    cursor: pointer;
+    white-space: nowrap; /* Prevent "All" from wrapping */
+    border-right: 1px solid #ddd;
+}
+
+.search-input {
+    flex-grow: 1;
+    padding: 10px;
+    border: none;
+    font-size: 1rem;
+    outline: none; /* Remove focus outline */
+}
+
+.search-button {
+    background-color: #f3a847;
+    border: none;
+    width: 45px;
+    cursor: pointer;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23131921" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>');
+    background-size: 50%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.header-right {
+    display: flex;
+    align-items: flex-end; /* Align to the bottom of the items */
+    gap: 20px;
+    font-size: 0.8rem;
+    white-space: nowrap; /* Prevent text wrapping in these elements */
+}
+
+.language-dropdown, .account-list, .returns-orders, .cart {
+    cursor: pointer;
+    padding: 5px 0; /* Add padding for a larger click area */
+}
+
+.language-dropdown span {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-weight: bold;
+}
+
+.account-hello {
+    display: block;
+    font-size: 0.7rem;
+    line-height: 1;
+}
+
+.account-text, .orders-text {
+    font-weight: bold;
+}
+
+.cart {
+    display: flex;
+    flex-direction: column; /* Stack "Cart" icon and text */
+    align-items: center;
+    position: relative; /* For potential future badge positioning */
+    padding-left: 10px; /* Space for cart icon */
+    padding-right: 5px;
+}
+
+.cart img {
+    height: 25px;
+    margin-bottom: -5px; /* Pull icon closer to text */
+}
+
+/* Navigation Bar (header-nav) */
+.header-nav {
+    background-color: #232f3e;
+    color: white;
+    display: flex;
+    padding: 5px 20px;
+    font-size: 0.85rem;
+    gap: 15px;
+    overflow-x: auto; /* Allows horizontal scrolling if items exceed width */
+    white-space: nowrap; /* Prevents nav items from wrapping to next line */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+.nav-item {
+    padding: 5px 0;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.2s ease-in-out; /* Smooth transition for hover */
+}
+
+.nav-item:hover {
+    color: #f3a847; /* Highlight on hover */
+}
+
+
+/* Main Banner */
+.header-banner {
+    width: 100%;
+    margin-top: 0; /* No space between nav and banner */
+}
+
+.header-banner-image {
+    width: 100%;
+    display: block;
+    /* You might want to set a max-height or object-fit: cover here */
+    /* max-height: 400px; */
+    /* object-fit: cover; */
+}
+
+
+/* Content Area - Category Sections */
+.content {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 20px;
+    /* background-color: #fff;  Removed as individual sections will have white background */
+    margin: 20px;
+    /* border-radius: 8px; */
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+    flex-wrap: wrap; /* Allow items to wrap for responsiveness */
+}
+
+.category-section {
+    flex: 1 1 300px; /* Flex-grow, flex-shrink, basis. Allows flexibility and minimum width */
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative; /* Important for potential future draggable functionality */
+    margin-bottom: 15px; /* Space between rows when wrapping */
+    min-width: 280px; /* Ensure boxes don't get too small */
+}
+
+.category-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    flex-grow: 1; /* Allows grid to take up available space */
+}
+
+.grid-item {
+    text-align: left;
+    display: flex; /* Use flex to align image and text */
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.grid-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    object-fit: contain; /* Ensures image is fully visible, adjusts size */
+    max-height: 100px; /* Max height for grid images */
+}
+
+.grid-item p {
+    font-size: 0.85rem;
+    margin-top: 5px;
+    color: #555;
+}
+
+.explore-link {
+    margin-top: auto; /* Pushes the link to the bottom */
+    font-size: 0.9rem;
+    color: #007185;
+    text-decoration: none;
+    padding-top: 15px;
+    display: block;
+}
+
+.explore-link:hover {
+    color: #c45500;
+    text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .header-top {
+        flex-wrap: wrap; /* Allow header items to wrap */
+        justify-content: center;
+        padding: 10px;
+    }
+
+    .header-left {
+        flex-basis: 100%; /* Take full width */
+        justify-content: center;
+        margin-bottom: 10px;
+    }
+
+    .search-bar-container {
+        flex-basis: 100%; /* Take full width */
+        margin: 10px 0;
+    }
+
+    .header-right {
+        flex-basis: 100%; /* Take full width */
+        justify-content: space-around;
+    }
+
+    .content {
+        flex-direction: column;
+        align-items: center; /* Center boxes when stacked */
+    }
+
+    .category-section {
+        width: 90%; /* Take up most of the width when stacked */
+        max-width: 400px; /* Prevent from becoming too wide on large screens when stacked */
+    }
+
+    .header-nav {
+        justify-content: flex-start; /* Align nav items to start */
+    }
+}
+
+@media (max-width: 768px) {
+    .header-top {
+        padding: 5px 10px;
+    }
+    .header-left {
+        gap: 10px;
+    }
+    .amazon-logo {
+        height: 25px;
+    }
+    .location-container {
+        font-size: 0.75rem;
+    }
+    .search-input {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+    .all-dropdown {
+        padding: 8px;
+    }
+    .header-right {
+        gap: 10px;
+        font-size: 0.75rem;
+    }
+    .cart img {
+        height: 20px;
+    }
+    .header-nav {
+        padding: 5px 10px;
+        font-size: 0.8rem;
+        gap: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-right {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .account-list, .returns-orders, .language-dropdown {
+        flex-basis: 45%; /* Allow items to share space */
+        text-align: center;
+    }
+    .cart {
+        flex-basis: 100%;
+        margin-top: 10px;
+    }
+    .category-title {
+        font-size: 1.1rem;
+    }
+    .grid-item p {
+        font-size: 0.8rem;
+    }
+}
