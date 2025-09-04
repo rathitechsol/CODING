@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Web Helper</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom scrollbar for chat history */
+        #chat-history::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        #chat-history::-webkit-scrollbar-track {
+            background: #1f2937;
+            border-radius: 10px;
+        }
+
+        #chat-history::-webkit-scrollbar-thumb {
+            background: #374151;
+            border-radius: 10px;
+        }
+
+        #chat-history::-webkit-scrollbar-thumb:hover {
+            background: #4b5563;
+        }
+
+        /* Styling for the main chat window */
+        #chat-window {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            transition: transform 0.3s ease-in-out;
+            transform: translateY(calc(100% + 20px));
+        }
+
+        /* Show the chat window when active */
+        #chat-window.active {
+            transform: translateY(0);
+        }
+
+        /* Smooth transition for the chat button */
+        #chat-toggle-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1001;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        #chat-toggle-btn.hide-btn {
+            transform: translateY(calc(100% + 20px));
+        }
+
+        .user-message {
+            background-color: #3b82f6; /* Blue for user messages */
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 0;
+        }
+
+        .gemini-message {
+            background-color: #4b5563; /* Gray for Gemini messages */
+            color: white;
+            align-self: flex-start;
+            border-bottom-left-radius: 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-100 font-sans">
+    <div id="app-container" class="relative">
+        <!-- Main floating chat button to toggle the window -->
+        <button id="chat-toggle-btn" class="bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition-transform duration-300">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+            </svg>
+        </button>
+
+        <!-- The main collapsible chat window -->
+        <div id="chat-window" class="w-80 h-[400px] bg-gray-800 rounded-lg shadow-2xl flex flex-col transition-all duration-300">
+            <!-- Header for the chat window -->
+            <div class="bg-gray-700 p-4 rounded-t-lg flex items-center justify-between">
+                <span class="text-lg font-semibold">Gemini Web Helper</span>
+                <button id="close-chat-btn" class="text-gray-400 hover:text-white">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Chat history area -->
+            <div id="chat-history" class="flex-grow p-4 overflow-y-auto space-y-4">
+                <div class="flex flex-col items-start">
+                    <div class="gemini-message p-3 rounded-xl max-w-xs">
+                        Hello! I am Gemini, a helpful web assistant. I can analyze this page and answer your questions.
+                    </div>
+                </div>
+            </div>
+
+            <!-- New feature buttons -->
+            <div class="flex flex-col gap-2 p-4 bg-gray-700">
+                <button id="summarize-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-200">
+                    ✨ Summarize Page
+                </button>
+                <button id="explain-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-200">
+                    ✨ Explain Concepts
+                </button>
+                <button id="questions-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors duration-200">
+                    ✨ Generate Questions
+                </button>
+            </div>
+            
+            <!-- Input area for user messages -->
+            <div class="p-4 bg-gray-700 rounded-b-lg">
+                <div class="flex items-center space-x-2">
+                    <input type="text" id="user-input" placeholder="Ask me about this page..." class="flex-grow bg-gray-600 text-white placeholder-gray-400 p-2 rounded-lg border-none focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    <button id="send-btn" class="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        const apiKey = "";
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+        // Get DOM elements
+        const chatToggleBtn = document.getElementById('chat-toggle-btn');
+        const chatWindow = document.getElementById('chat-window');
+        const closeChatBtn = document.getElementById('close-chat-btn');
+        const chatHistory = document.getElementById('chat-history');
+        const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+        const summarizeBtn = document.getElementById('summarize-btn');
+        const explainBtn = document.getElementById('explain-btn');
+        const questionsBtn = document.getElementById('questions-btn');
+
+        let isChatOpen = false;
+        let isFetching = false;
+        const chatHistoryData = [];
+
+        // Function to toggle the chat window visibility
+        function toggleChatWindow() {
+            isChatOpen = !isChatOpen;
+            if (isChatOpen) {
+                chatWindow.classList.add('active');
+                chatToggleBtn.classList.add('hide-btn');
+            } else {
+                chatWindow.classList.remove('active');
+                chatToggleBtn.classList.remove('hide-btn');
+            }
+        }
+
+        // Add event listeners for the buttons
+        chatToggleBtn.addEventListener('click', toggleChatWindow);
+        closeChatBtn.addEventListener('click', toggleChatWindow);
+        summarizeBtn.addEventListener('click', () => sendPredefinedPrompt("Summarize the following content in a single, concise paragraph."));
+        explainBtn.addEventListener('click', () => sendPredefinedPrompt("Explain the main concepts from the following text in simple terms, using an easy-to-understand analogy."));
+        questionsBtn.addEventListener('click', () => sendPredefinedPrompt("Based on the following content, generate three insightful questions one could ask to learn more about the topic. Format them as a numbered list."));
+
+        // Function to create and add a new message to the chat history
+        function addMessage(text, isUser) {
+            const messageContainer = document.createElement('div');
+            messageContainer.classList.add('flex', 'flex-col', 'items-start');
+            const messageBubble = document.createElement('div');
+            messageBubble.classList.add('p-3', 'rounded-xl', 'max-w-xs', 'text-sm');
+
+            if (isUser) {
+                messageBubble.classList.add('user-message', 'ml-auto', 'rounded-br-none');
+            } else {
+                messageBubble.classList.add('gemini-message', 'mr-auto', 'rounded-bl-none');
+            }
+            messageBubble.innerText = text;
+
+            messageContainer.appendChild(messageBubble);
+            chatHistory.appendChild(messageContainer);
+            chatHistory.scrollTop = chatHistory.scrollHeight; // Auto-scroll to the latest message
+        }
+
+        // Function to get the text content from the current webpage
+        function getPageContent() {
+            let content = '';
+            try {
+                // Use a combination of document.body.innerText and document.body.textContent
+                // to get a good representation of the page content.
+                content = document.body.innerText || document.body.textContent;
+                
+                // Truncate the content to a reasonable size to avoid API token limits.
+                const maxChars = 4000;
+                if (content.length > maxChars) {
+                    content = content.substring(0, maxChars) + '... (content truncated)';
+                }
+            } catch (e) {
+                console.error('Error extracting page content:', e);
+                return 'Could not extract content from the page.';
+            }
+            return content;
+        }
+
+        // Function to handle sending a message
+        async function sendMessage(userPrompt) {
+            if (isFetching) {
+                return;
+            }
+
+            isFetching = true;
+            addMessage(userPrompt, true);
+
+            // Add a loading message from Gemini
+            addMessage('...', false);
+
+            try {
+                const pageContent = getPageContent();
+                const combinedPrompt = `I am currently on a webpage with the following content:\n\n---\n${pageContent}\n---\n\nBased on this page, please answer my question: ${userPrompt}`;
+
+                const systemPrompt = "You are a helpful and concise web assistant. Your purpose is to analyze the content of a given webpage and provide clear, relevant information based on the user's questions. Stay focused on the provided page content and answer directly.";
+
+                const payload = {
+                    contents: [{ parts: [{ text: combinedPrompt }] }],
+                    systemInstruction: { parts: [{ text: systemPrompt }] },
+                    tools: [{ "google_search": {} }], // Enable Google Search grounding for broader context
+                };
+                
+                // Exponential backoff for API calls
+                let retryCount = 0;
+                const maxRetries = 3;
+                while (retryCount < maxRetries) {
+                    try {
+                        const response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+
+                        const result = await response.json();
+                        const candidate = result.candidates?.[0];
+
+                        // Remove the loading message and display the actual response
+                        chatHistory.removeChild(chatHistory.lastChild);
+                        
+                        if (candidate && candidate.content?.parts?.[0]?.text) {
+                            const geminiResponse = candidate.content.parts[0].text;
+                            addMessage(geminiResponse, false);
+                        } else {
+                            addMessage("I'm sorry, I couldn't generate a response. Please try again.", false);
+                        }
+                        break; // Exit the retry loop on success
+                    } catch (error) {
+                        console.error('Fetch error:', error);
+                        retryCount++;
+                        if (retryCount >= maxRetries) {
+                            chatHistory.removeChild(chatHistory.lastChild);
+                            addMessage("I'm sorry, I am unable to connect to the server. Please try again later.", false);
+                        } else {
+                            const delay = Math.pow(2, retryCount) * 1000; // Exponential backoff
+                            await new Promise(resolve => setTimeout(resolve, delay));
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('API call failed:', error);
+                chatHistory.removeChild(chatHistory.lastChild);
+                addMessage("An unexpected error occurred. Please check the console for details.", false);
+            } finally {
+                isFetching = false;
+            }
+        }
+
+        // Function to handle sending a predefined prompt
+        function sendPredefinedPrompt(prompt) {
+            userInput.value = prompt; // Set the input field value
+            sendMessage(prompt);
+        }
+
+        // Event listeners for user input
+        sendBtn.addEventListener('click', () => {
+            const userPrompt = userInput.value.trim();
+            if (userPrompt !== '') {
+                sendMessage(userPrompt);
+                userInput.value = ''; // Clear the input field after sending
+            }
+        });
+
+        userInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const userPrompt = userInput.value.trim();
+                if (userPrompt !== '') {
+                    sendMessage(userPrompt);
+                    userInput.value = ''; // Clear the input field after sending
+                }
+            }
+        });
+    </script>
+</body>
+</html>

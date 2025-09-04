@@ -27,7 +27,7 @@ def is_public_http_url(url: str) -> bool:
         return False
     # Disallow localhost and private networks
     private_patterns = [
-        r"https?://localhost",
+        r"https?://localhost",XXXX
         r"https?://127\.0\.0\.1",
         r"https?://0\.0\.0\.0",
         r"https?://10\.",

@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Solver Settings</title>
+  <style>
+    body{font-family:ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;padding:16px;max-width:720px}
+    input,select{padding:8px;border:1px solid #cbd5e1;border-radius:6px;width:100%}
+    label{display:block;margin-top:12px;margin-bottom:4px}
+    button{margin-top:12px;background:#4F46E5;color:#fff;border:none;padding:8px 12px;border-radius:6px;cursor:pointer}
+  </style>
+  <script>
+    async function load(){
+      const { openaiKey, anthropicKey, provider } = await chrome.storage.sync.get(['openaiKey','anthropicKey','provider']);
+      document.getElementById('openaiKey').value = openaiKey || '';
+      document.getElementById('anthropicKey').value = anthropicKey || '';
+      document.getElementById('provider').value = provider || 'OpenAI';
+    }
+    async function save(){
+      const openaiKey = document.getElementById('openaiKey').value.trim();
+      const anthropicKey = document.getElementById('anthropicKey').value.trim();
+      const provider = document.getElementById('provider').value;
+      await chrome.storage.sync.set({ openaiKey, anthropicKey, provider });
+      const s = document.getElementById('status'); s.textContent = 'Saved'; setTimeout(()=>s.textContent='', 1200);
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      load();
+      document.getElementById('save').addEventListener('click', save);
+    });
+  </script>
+</head>
+<body>
+  <h2>Settings</h2>
+  <label for="provider">AI Provider</label>
+  <select id="provider">
+    <option>OpenAI</option>
+    <option>Claude</option>
+    <option>Gemini</option>
+  </select>
+  <label for="openaiKey">OpenAI API Key</label>
+  <input id="openaiKey" type="password" placeholder="sk-..." />
+  <label for="anthropicKey">Anthropic API Key</label>
+  <input id="anthropicKey" type="password" placeholder="sk-ant-..." />
+  <button id="save">Save</button> <span id="status"></span>
+</body>
+</html>
+
+
