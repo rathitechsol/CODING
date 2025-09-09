@@ -5,7 +5,6 @@ body {
     padding: 0;
 }
 
-/* Header styling (Top bar) */
 .header-top {
     background-color: #131921;
     color: white;
@@ -13,12 +12,12 @@ body {
     align-items: center;
     padding: 10px 20px;
     justify-content: space-between;
-    min-height: 60px; /* Ensure a minimum height for the top bar */
+    min-height: 60px;
 }
 
 .header-left {
     display: flex;
-    align-items: flex-end; /* Align to the bottom of the items */
+    align-items: flex-end;
     gap: 15px;
 }
 
